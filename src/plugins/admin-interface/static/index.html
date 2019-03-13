@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>Admin Interface</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.18.0/axios.min.js"></script>
+  </head>
+  <body>
+    <script>
+      console.log(axios)
+      axios.post('http://localhost:3333/admin').then(res => console.log(res))
+    </script>
+  </body>
+</html>
