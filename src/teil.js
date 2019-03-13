@@ -7,7 +7,7 @@ const watchControllers = require('./core/watch-controllers')
 const buildRouter = require('./core/build-router')
 const replaceRouter = require('./core/replace-router')
 const plugins = require('./plugins')
-const customControllers = require('./controllers/custom-controllers')
+// const customControllers = require('./controllers/custom-controllers')
 
 let app, server
 
@@ -43,7 +43,7 @@ module.exports = {
       })
 
       // TODO for all controllers
-      customControllers().forEach(({ options }) => {
+      /* customControllers().forEach(({ options }) => {
         if (options.staticDir) {
           const staticMiddleware = express.static(
             options.staticDir,
@@ -52,7 +52,7 @@ module.exports = {
 
           app.use(`/${options.url}`, staticMiddleware)
         }
-      })
+      })*/
 
       if (startServer) {
         server = app.listen(options.port, options.host, () => {

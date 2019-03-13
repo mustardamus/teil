@@ -31,7 +31,8 @@
     "import-fresh": "^3.0.0",
     "lodash": "4.17.11",
     "nuxt": "^2.4.5",
-    "stacktracey": "^1.2.109"
+    "stacktracey": "^1.2.109",
+    "tty-table": "^2.7.0"
   },
   "devDependencies": {
     "eslint": "^5.15.1",

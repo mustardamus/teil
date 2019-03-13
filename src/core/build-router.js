@@ -7,6 +7,8 @@ const parseControllerObject = require('../controllers/parse-object')
 const extendControllerHandlers = require('../controllers/extend-handlers')
 const customControllers = require('../controllers/custom-controllers')
 
+let isInitialBuild = true
+
 module.exports = controllersGlob => {
   try {
     const router = express.Router()
@@ -34,6 +36,11 @@ module.exports = controllersGlob => {
 
       routerFunc.apply(router, [route.route, route.handlers])
     })
+
+    if (isInitialBuild) {
+      isInitialBuild = false
+      eventBus.emit('router:initial-build', extendedRoutes)
+    }
 
     return router
   } catch (err) {
