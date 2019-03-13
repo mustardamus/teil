@@ -16,7 +16,7 @@ module.exports = (configPath = cwdConfigPath, customOptions = {}) => {
     host: 'localhost',
     port: 3333,
 
-    apiEndpoint: '/',
+    apiEndpoint: '/api',
 
     staticEndpoint: '/',
     staticDir: join(cwd, 'static'),

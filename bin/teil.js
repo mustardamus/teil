@@ -8,7 +8,7 @@ const cwd = process.cwd()
 const cwdConfigPath = join(cwd, 'teil.config.js')
 const watcher = chokidar.watch(cwdConfigPath, { ignoreInitial: true })
 
-teil.start(cwdConfigPath)
+teil.start(cwdConfigPath, true) // includes starting the server
 
 watcher.on('change', () => {
   eventBus.emit('server:restart')

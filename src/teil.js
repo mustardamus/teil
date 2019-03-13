@@ -12,7 +12,7 @@ const customControllers = require('./controllers/custom-controllers')
 let app, server
 
 module.exports = {
-  async start(configPath = '') {
+  async start(configPath = '', startServer) {
     try {
       eventBus._events = {} // TODO event bus reset via function
 
@@ -54,15 +54,19 @@ module.exports = {
         }
       })
 
-      server = app.listen(options.port, options.host, () => {
-        eventBus.emit('server:started', { app, server, options })
-      })
+      if (startServer) {
+        server = app.listen(options.port, options.host, () => {
+          eventBus.emit('server:started', { app, server, options })
+        })
+      }
 
       eventBus.on('controller:changed', () => {
         const router = buildRouter(options.controllersGlob)
 
         replaceRouter(app, router, options.apiEndpoint)
       })
+
+      return Promise.resolve(app)
     } catch (err) {
       eventBus.emit('server:error', err)
     }
