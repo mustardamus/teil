@@ -1,37 +1,39 @@
 const { join } = require('path')
 const { isFunction } = require('lodash')
-const parser = require('../../src/controllers/parser')
+const parseFile = require('../../src/controllers/parse-file')
 
 const fixturesDir = join(__dirname, '../fixtures/controllers')
 
-describe('Controllers Parser', () => {
+describe('Controllers - Parse a File', () => {
   it('should throw an error if file dont exist', () => {
-    expect(() => parser('/non-existent.js')).toThrow('Does not exist')
+    expect(() => parseFile('/non-existent.js')).toThrow('Does not exist')
   })
 
   it('should throw an error if anything is wrong with the code', () => {
     const filePath = join(fixturesDir, 'invalid-syntax-error.js')
-    expect(() => parser(filePath)).toThrow()
+    expect(() => parseFile(filePath)).toThrow()
   })
 
   it('should throw an error if it doesnt export an object', () => {
     const filePath = join(fixturesDir, 'invalid-export-no-object.js')
-    expect(() => parser(filePath)).toThrow('Should export an object')
+    expect(() => parseFile(filePath)).toThrow('Should export an object')
   })
 
   it('should throw an error if it has a invalid http verb', () => {
     const filePath = join(fixturesDir, 'invalid-http-verb.js')
-    expect(() => parser(filePath)).toThrow(`Unknown HTTP verb 'NOPE'`)
+    expect(() => parseFile(filePath)).toThrow(`Unknown HTTP verb 'NOPE'`)
   })
 
   it('should throw an error if it lacks of a route', () => {
     const filePath = join(fixturesDir, 'invalid-no-route.js')
-    expect(() => parser(filePath)).toThrow(`Missing route for HTTP verb 'GET'`)
+    expect(() => parseFile(filePath)).toThrow(
+      `Missing route for HTTP verb 'GET'`
+    )
   })
 
   it('should parse a single function route', () => {
     const filePath = join(fixturesDir, 'valid-single-function.js')
-    const routes = parser(filePath)
+    const routes = parseFile(filePath)
 
     expect(routes).toHaveLength(1)
     expect(routes[0].verb).toBe('GET')
@@ -44,7 +46,7 @@ describe('Controllers Parser', () => {
 
   it('should parse a multi functions route', () => {
     const filePath = join(fixturesDir, 'valid-multi-functions.js')
-    const routes = parser(filePath)
+    const routes = parseFile(filePath)
 
     expect(routes).toHaveLength(1)
     expect(routes[0].verb).toBe('GET')
@@ -59,7 +61,7 @@ describe('Controllers Parser', () => {
 
   it('should parse a route with options', () => {
     const filePath = join(fixturesDir, 'valid-options.js')
-    const routes = parser(filePath)
+    const routes = parseFile(filePath)
 
     expect(routes).toHaveLength(1)
     expect(routes[0].options).toEqual({ body: true, query: true })
@@ -68,7 +70,7 @@ describe('Controllers Parser', () => {
 
   it('should overwrite the base url with options', () => {
     const filePath = join(fixturesDir, 'valid-custom-base-url.js')
-    const routes = parser(filePath)
+    const routes = parseFile(filePath)
 
     expect(routes).toHaveLength(1)
     expect(routes[0].verb).toBe('GET')
