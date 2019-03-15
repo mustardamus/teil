@@ -17,6 +17,7 @@
     "test:coverage": "jest --coverage",
     "docs:dev": "nuxt dev",
     "docs:build": "nuxt generate && jsdoc src -r -d dist/code",
+    "docs:publish": "npm run docs:build && gh-pages -d dist",
     "upgrade": "npm-check --update --skip-unused --no-emoji",
     "example": "cd example && node ../bin/teil.js"
   },
@@ -42,6 +43,7 @@
     "eslint-plugin-node": "^8.0.1",
     "eslint-plugin-prettier": "^3.0.1",
     "eslint-plugin-promise": "^4.0.1",
+    "gh-pages": "^2.0.1",
     "jest": "^24.5.0",
     "jsdoc": "^3.5.5",
     "npm-check": "^5.9.0",
