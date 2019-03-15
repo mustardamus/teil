@@ -9,7 +9,7 @@ const replaceRouter = require('./core/replace-router')
 const plugins = require('./plugins')
 // const customControllers = require('./controllers/custom-controllers')
 
-let app, server
+let app, server, watcher
 
 module.exports = {
   async start(configPath = '', startServer) {
@@ -25,7 +25,7 @@ module.exports = {
       const options = buildOptions(configPath)
 
       plugins()
-      watchControllers(options.controllersGlob)
+      watcher = watchControllers(options.controllersGlob)
 
       app = express()
       const router = buildRouter(options.controllersGlob)
@@ -73,7 +73,14 @@ module.exports = {
   },
 
   stop() {
-    server.close()
+    if (server) {
+      server.close()
+    }
+
+    if (watcher) {
+      watcher.close()
+    }
+
     eventBus.emit('server:closed')
   }
 }

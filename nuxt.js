@@ -7,4 +7,8 @@ module.exports = async function(moduleOptions) {
 
   this.addServerMiddleware({ path: '/', handler: app._router })
   console.log('Teil initialized')
+
+  this.nuxt.hook('build:done', () => {
+    teil.stop()
+  })
 }
