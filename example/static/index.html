@@ -2,57 +2,82 @@
 <html>
   <head>
     <meta charset="utf-8">
-    <title>Teil Examples</title>
-    
-    <style>
-      html {
-        background: #aaa;
-      }
-      
-      body > div {
-        width: 33%;
-        float: left;
-      }
-      
-      .request {
-        box-shadow: 0 0 10px black;
-        margin: 25px;
-        border-radius: 5px;
-      }
-      
-      h1 {
-        background: black;
-        color: white;
-        font-size: 16px;
-        font-weight: normal;
-        border-top-left-radius: 5px;
-        border-top-right-radius: 5px;
-        padding: 7px 14px;
-        margin: 0;
-      }
-      
-      h1 span.method {
-        border: 1px solid white;
-        border-radius: 3px;
-        display: inline-block;
-        padding: 3px 7px;
-        margin-right: 10px;
-        background: rgba(255, 255, 255, 0.15);
-        text-shadow: 1px 1px 0 black;
-      }
-      
-      pre {
-        border: 1px solid black;
-        border-bottom-left-radius: 5px;
-        border-bottom-right-radius: 5px;
-        margin: 0;
-        padding: 7px 14px;
-        background: white;
-      }
-    </style>
+    <title>Teil Example</title>
+    <link rel="stylesheet" href="lib/bulma.min.css">
   </head>
   
   <body>
-    <script src="example-queries.js"></script>
+    <div id="app">
+      <div class="columns section">
+        <div class="column">
+          <h1 class="title is-1">Authors</h1>
+          
+          <form @submit.prevent="onAuthorSubmit">
+            <div class="field">
+              <input class="input" type="input" v-model="authorInput" />
+            </div>
+          </form>
+          
+          <div v-for="author in authors">
+            {{ author }}
+          </div>
+        </div>
+        
+        <div class="column">
+          <h1 class="title is-1">Books</h1>
+          
+          <form class="field has-addons" @submit.prevent="onBookSubmit">
+            <p class="control is-expanded">
+              <input class="input" type="text" placeholder="Book Title" v-model="bookInput">
+            </p>
+            
+            <p class="control">
+              <span class="select">
+                <select v-model="authorSelect">
+                  <option v-for="author in authors" :value="author.id">
+                    Author: {{ author.name }}
+                  </option>
+                </select>
+              </span>
+            </p>
+            
+            <p class="control">
+              <button type="submit" class="button is-info">
+                Save
+              </button>
+            </p>
+          </form>
+          
+          <div v-for="book in books">
+            {{ book }}
+          </div>
+        </div>
+        
+        <div class="column">
+          <div v-for="request in requests">
+            <h4 class="title is-4">
+              Request: {{ request.method.toUpperCase() }} {{ request.url }}
+            </h4>
+            
+            <pre v-if="request.data">{{ request.data }}</pre>
+          </div>
+          
+          <div v-for="response in responses">
+            <h4 class="title is-4">
+              Response:
+              {{ response.status }}
+              {{ response.config.method.toUpperCase() }}
+              {{ response.config.url }}
+            </h4>
+
+            <pre v-if="response.data">{{ response.data }}</pre>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <script src="lib/vue.min.js"></script>
+    <script src="lib/axios.min.js"></script>
+    <script src="app.js"></script>
   </body>
 </html>
