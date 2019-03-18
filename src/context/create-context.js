@@ -4,7 +4,7 @@ const customContexts = require('./custom-contexts')
 module.exports = ({ route, req, res, next }) => {
   const context = {}
 
-  if (route.options) {
+  if (route && route.options) {
     extend(context, { options: route.options })
   }
 
@@ -15,8 +15,7 @@ module.exports = ({ route, req, res, next }) => {
       body: req.body,
       cookies: req.cookies,
       params: req.params,
-      query: req.query,
-      session: req.session
+      query: req.query
     })
   }
 
