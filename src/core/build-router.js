@@ -9,14 +9,14 @@ const customControllers = require('../controllers/custom-controllers')
 
 let isInitialBuild = true
 
-module.exports = controllersGlob => {
+module.exports = options => {
   try {
     const router = express.Router()
-    const controllerPaths = globby.sync(controllersGlob)
+    const controllerPaths = globby.sync(options.controllersGlob)
     const routes = []
 
     controllerPaths.forEach(controllerPath => {
-      const rawRoutes = parseControllerFile(controllerPath)
+      const rawRoutes = parseControllerFile(controllerPath, options)
       routes.push(...rawRoutes)
     })
 

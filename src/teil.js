@@ -28,7 +28,7 @@ module.exports = {
       watcher = watchControllers(options.controllersGlob)
 
       app = express()
-      const router = buildRouter(options.controllersGlob)
+      const router = buildRouter(options)
       const staticMiddleware = express.static(
         options.staticDir,
         options.staticOptions
@@ -61,7 +61,7 @@ module.exports = {
       }
 
       eventBus.on('controller:changed', () => {
-        const router = buildRouter(options.controllersGlob)
+        const router = buildRouter(options)
 
         replaceRouter(app, router, options.apiEndpoint)
       })

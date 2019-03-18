@@ -23,15 +23,31 @@ Parses a controller .js file.
 
 const { existsSync } = require('fs')
 const importFresh = require('import-fresh')
-const { basename } = require('path')
+const { basename, parse, sep } = require('path')
 const parseObject = require('./parse-object')
 
-module.exports = filePath => {
+module.exports = (filePath, options = {}) => {
   if (!existsSync(filePath)) {
     throw new Error(`Does not exist`)
   }
 
-  const controller = importFresh(filePath) // require(filePath)
+  let url = basename(filePath, '.js')
+  const controller = importFresh(filePath)
 
-  return parseObject(controller, { url: basename(filePath, '.js') })
+  if (options.srcDir) {
+    const { dir, name } = parse(filePath)
+    let truncatedPath = dir.replace(options.srcDir, '')
+
+    if (truncatedPath.charAt(0) === '/') {
+      truncatedPath = truncatedPath.substr(1, truncatedPath.length)
+    }
+
+    const truncatedArr = truncatedPath.split(sep)
+
+    truncatedArr.shift() // remove 'controllers' prefix path
+
+    url = `${truncatedArr.join(sep)}/${name}`
+  }
+
+  return parseObject(controller, { url })
 }

@@ -76,4 +76,14 @@ describe('Controllers - Parse a File', () => {
     expect(routes[0].verb).toBe('GET')
     expect(routes[0].route).toBe('/some/custom/route/item')
   })
+
+  it('should use sub directories to build the URL', () => {
+    const filePath = join(fixturesDir, 'valid/subdir.js')
+    const options = { srcDir: join(fixturesDir, '..') }
+    const routes = parseFile(filePath, options)
+
+    expect(routes).toHaveLength(1)
+    expect(routes[0].verb).toBe('GET')
+    expect(routes[0].route).toBe('/valid/subdir')
+  })
 })
