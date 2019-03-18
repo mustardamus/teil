@@ -11,7 +11,6 @@ module.exports = {
 
   // POST /api/simple
   'POST /'({ send, body }) {
-    console.log('XXX', body)
     send({ message: 'received this body', body })
   }
 }

@@ -9,8 +9,16 @@ const jsGlob = '!(*test|*spec|*draft).js'
 const isProduction = process.env.NODE_ENV === 'production'
 
 module.exports = (configPath = cwdConfigPath, customOptions = {}) => {
+  let configOptions = {}
+
+  if (configPath.length && existsSync(configPath)) {
+    configOptions = importFresh(configPath)
+  }
+
+  const srcDir = configOptions.srcDir || cwd
+
   const defaultOptions = {
-    srcDir: cwd,
+    srcDir,
     isDev: !isProduction,
 
     host: 'localhost',
@@ -19,18 +27,12 @@ module.exports = (configPath = cwdConfigPath, customOptions = {}) => {
     apiEndpoint: '/api',
 
     staticEndpoint: '/',
-    staticDir: join(cwd, 'static'),
+    staticDir: join(srcDir, 'static'),
     staticOptions: {},
 
     expressSettings: {},
 
-    controllersGlob: join(cwd, 'controllers/**/', jsGlob)
-  }
-
-  let configOptions = {}
-
-  if (configPath.length && existsSync(configPath)) {
-    configOptions = importFresh(configPath)
+    controllersGlob: join(srcDir, 'controllers/**/', jsGlob)
   }
 
   return merge({}, defaultOptions, configOptions, customOptions)

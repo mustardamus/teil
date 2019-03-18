@@ -3,15 +3,15 @@
 const queries = [
   {
     method: 'GET',
-    url: '/simple'
+    url: '/api/simple'
   },
   {
     method: 'GET',
-    url: '/simple/hello/friend'
+    url: '/api/simple/hello/friend'
   },
   {
     method: 'POST',
-    url: '/simple',
+    url: '/api/simple',
     body: { works: true }
   }
 ]

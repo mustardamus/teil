@@ -35,6 +35,7 @@
   },
   "devDependencies": {
     "@nuxtjs/axios": "^5.4.1",
+    "axios": "^0.18.0",
     "bulma": "^0.7.4",
     "eslint": "^5.15.1",
     "eslint-config-prettier": "^4.1.0",
