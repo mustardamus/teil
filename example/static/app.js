@@ -53,6 +53,14 @@ new Vue({
       this.inputFocus()
 
       this.bookInput = ''
+    },
+
+    async onAuthorDeleteClick(author) {
+      await axios.delete(`/api/writers/${author.id}`)
+      await axios.delete(`/api/v1/books/author/${author.id}`)
+
+      this.getAuthors()
+      this.getBooks()
     }
   }
 })

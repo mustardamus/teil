@@ -5,12 +5,42 @@ module.exports = {
     send(global.books)
   },
 
-  'POST /'({ sendStatus, body: { book, authorId } }) {
-    if (!authorId) {
-      return sendStatus('500')
-    }
+  'POST /': [
+    {
+      schema: {
+        body: {
+          book: 'string',
+          authorId: 'string'
+        }
+      }
+    },
 
-    global.books.push({ book, authorId })
-    sendStatus(200)
-  }
+    ({ sendStatus, body: { book, authorId } }) => {
+      global.books.push({
+        id: Math.random()
+          .toString(36)
+          .substring(7),
+        name: book,
+        authorId
+      })
+
+      sendStatus(200)
+    }
+  ],
+
+  'DELETE /author/:authorId': [
+    {
+      schema: {
+        params: {
+          authorId: 'string'
+        }
+      }
+    },
+
+    ({ sendStatus, params: { authorId } }) => {
+      global.books = global.books.filter(book => book.authorId !== authorId)
+
+      sendStatus(200)
+    }
+  ]
 }

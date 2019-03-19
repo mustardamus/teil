@@ -14,13 +14,31 @@
           
           <form @submit.prevent="onAuthorSubmit">
             <div class="field">
-              <input class="input" type="input" v-model="authorInput" />
+              <input class="input" type="input" placeholder="Author Name + Enter" v-model="authorInput" />
             </div>
           </form>
           
-          <div v-for="author in authors">
-            {{ author }}
-          </div>
+          <table class="table is-bordered is-striped is-fullwidth">
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>Author</th>
+                <th>Delete</th>
+              </tr>
+            </thead>
+            
+            <tbody>
+              <tr v-for="author in authors">
+                <td>{{ author.id }}</td>
+                <td>{{ author.name }}</td>
+                <td>
+                  <a class="button is-danger" @click="onAuthorDeleteClick(author)">
+                    Delete
+                  </a>
+                </td>
+              </tr>
+            </tbody>
+          </table>
         </div>
         
         <div class="column">
