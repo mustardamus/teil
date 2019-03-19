@@ -8,22 +8,10 @@ new Vue({
     authors: [],
     bookInput: '',
     books: [],
-    authorSelect: null,
-    requests: [],
-    responses: []
+    authorSelect: null
   },
 
   async mounted() {
-    axios.interceptors.request.use(config => {
-      this.requests.push(config)
-      return config
-    })
-
-    axios.interceptors.response.use(config => {
-      this.responses.push(config)
-      return config
-    })
-
     this.inputFocus()
     this.getAuthors()
     this.getBooks()

@@ -9,16 +9,26 @@ module.exports = {
     send(global.authors)
   },
 
-  'POST /'({ send, body }) {
-    if (body.author.length !== 0) {
-      global.authors.push({
-        id: Math.random()
-          .toString(36)
-          .substring(7),
-        name: body.author
-      })
-    }
+  'POST /': [
+    {
+      schema: {
+        body: {
+          author: 'string'
+        }
+      }
+    },
 
-    send(true)
-  }
+    ({ send, body }) => {
+      if (body.author.length !== 0) {
+        global.authors.push({
+          id: Math.random()
+            .toString(36)
+            .substring(7),
+          name: body.author
+        })
+      }
+
+      send(true)
+    }
+  ]
 }

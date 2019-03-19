@@ -1,15 +1,18 @@
 const handlerWrapper = require('./handler-wrapper')
 const middlewareError = require('../middlewares/error')
 const middlewareLog = require('../middlewares/log')
+const customMiddlewares = require('../middlewares/custom-middlewares')
 
 module.exports = routes => {
   return routes.map(route => {
-    route.handlers = route.handlers.map(handler => {
-      return handlerWrapper(handler, route)
-    })
+    const handlers = [
+      middlewareLog,
+      ...customMiddlewares(),
+      ...route.handlers,
+      middlewareError
+    ]
 
-    route.handlers.unshift(middlewareLog)
-    route.handlers.push(middlewareError)
+    route.handlers = handlers.map(handler => handlerWrapper(handler, route))
 
     return route
   })

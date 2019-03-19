@@ -52,27 +52,6 @@
             {{ book }}
           </div>
         </div>
-        
-        <div class="column">
-          <div v-for="request in requests">
-            <h4 class="title is-4">
-              Request: {{ request.method.toUpperCase() }} {{ request.url }}
-            </h4>
-            
-            <pre v-if="request.data">{{ request.data }}</pre>
-          </div>
-          
-          <div v-for="response in responses">
-            <h4 class="title is-4">
-              Response:
-              {{ response.status }}
-              {{ response.config.method.toUpperCase() }}
-              {{ response.config.url }}
-            </h4>
-
-            <pre v-if="response.data">{{ response.data }}</pre>
-          </div>
-        </div>
       </div>
     </div>
     

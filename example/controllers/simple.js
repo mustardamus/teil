@@ -5,9 +5,19 @@ module.exports = {
   },
 
   // GET /api/simple/hello/xxx
-  'GET /hello/:name'({ send, params }) {
-    send({ message: `Hey there ${params.name}` })
-  },
+  'GET /hello/:name': [
+    {
+      schema: {
+        params: {
+          name: 'string'
+        }
+      }
+    },
+
+    ({ send, params }) => {
+      send({ message: `Hey there ${params.name}` })
+    }
+  ],
 
   // POST /api/simple
   'POST /'({ send, body }) {
