@@ -1,4 +1,5 @@
 const express = require('express')
+const helmet = require('helmet')
 const bodyParser = require('body-parser')
 const logger = require('./core/logger')
 const eventBus = require('./core/event-bus')
@@ -34,6 +35,7 @@ module.exports = {
         options.staticOptions
       )
 
+      app.use(helmet()) // TODO options
       app.use(bodyParser.json()) // TODO options
       app.use(options.staticEndpoint, staticMiddleware)
       app.use(options.apiEndpoint, router)
