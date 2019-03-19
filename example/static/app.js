@@ -61,6 +61,12 @@ new Vue({
 
       this.getAuthors()
       this.getBooks()
+    },
+
+    async onBookDeleteClick(book) {
+      await axios.delete(`/api/v1/books/${book.id}`)
+
+      this.getBooks()
     }
   }
 })

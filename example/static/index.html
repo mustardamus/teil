@@ -12,8 +12,8 @@
         <div class="column">
           <h1 class="title is-1">Authors</h1>
           
-          <form @submit.prevent="onAuthorSubmit">
-            <div class="field">
+          <form class="field" @submit.prevent="onAuthorSubmit">
+            <div class="control">
               <input class="input" type="input" placeholder="Author Name + Enter" v-model="authorInput" />
             </div>
           </form>
@@ -66,9 +66,29 @@
             </p>
           </form>
           
-          <div v-for="book in books">
-            {{ book }}
-          </div>
+          <table class="table is-bordered is-striped is-fullwidth">
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>Book</th>
+                <th>Author</th>
+                <th>Delete</th>
+              </tr>
+            </thead>
+            
+            <tbody>
+              <tr v-for="book in books">
+                <td>{{ book.id }}</td>
+                <td>{{ book.name }}</td>
+                <td>{{ book.author.name }}</td>
+                <td>
+                  <a class="button is-danger" @click="onBookDeleteClick(book)">
+                    Delete
+                  </a>
+                </td>
+              </tr>
+            </tbody>
+          </table>
         </div>
       </div>
     </div>

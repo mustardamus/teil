@@ -2,7 +2,12 @@ global.books = []
 
 module.exports = {
   'GET /'({ send }) {
-    send(global.books)
+    const booksExtended = global.books.map(book => {
+      book.author = global.authors.find(author => author.id === book.authorId)
+      return book
+    })
+
+    send(booksExtended)
   },
 
   'POST /': [
@@ -23,6 +28,22 @@ module.exports = {
         name: book,
         authorId
       })
+
+      sendStatus(200)
+    }
+  ],
+
+  'DELETE /:id': [
+    {
+      schema: {
+        params: {
+          id: 'string'
+        }
+      }
+    },
+
+    ({ sendStatus, params }) => {
+      global.books = global.books.filter(book => book.id !== params.id)
 
       sendStatus(200)
     }
