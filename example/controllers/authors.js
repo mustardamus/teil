@@ -34,6 +34,35 @@ module.exports = {
     }
   ],
 
+  'PUT /:id': [
+    {
+      schema: {
+        params: {
+          id: 'string'
+        },
+        body: {
+          author: 'string'
+        }
+      }
+    },
+
+    ({ sendStatus, params, body }) => {
+      if (body.author.length === 0) {
+        return sendStatus(500)
+      }
+
+      global.authors = global.authors.map(author => {
+        if (author.id === params.id) {
+          author.name = body.author
+        }
+
+        return author
+      })
+
+      sendStatus(200)
+    }
+  ],
+
   'DELETE /:id': [
     {
       schema: {

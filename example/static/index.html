@@ -23,6 +23,7 @@
               <tr>
                 <th>ID</th>
                 <th>Author</th>
+                <th>Edit</th>
                 <th>Delete</th>
               </tr>
             </thead>
@@ -30,7 +31,22 @@
             <tbody>
               <tr v-for="author in authors">
                 <td>{{ author.id }}</td>
-                <td>{{ author.name }}</td>
+                <td>
+                  <template v-if="author.id === authorEditId">
+                    <form @submit.prevent="onAuthorEditSubmit">
+                      <input class="input" type="text" v-model="authorEditInput" />
+                    </form>
+                  </template>
+                  
+                  <template v-else>
+                    {{ author.name }}
+                  </template>
+                </td>
+                <td>
+                  <a class="button is-info" @click="onAuthorEditClick(author)">
+                    Edit
+                  </a>
+                </td>
                 <td>
                   <a class="button is-danger" @click="onAuthorDeleteClick(author)">
                     Delete

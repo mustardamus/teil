@@ -8,7 +8,9 @@ new Vue({
     authors: [],
     bookInput: '',
     books: [],
-    authorSelect: null
+    authorSelect: null,
+    authorEditId: null,
+    authorEditInput: ''
   },
 
   async mounted() {
@@ -53,6 +55,22 @@ new Vue({
       this.inputFocus()
 
       this.bookInput = ''
+    },
+
+    async onAuthorEditClick(author) {
+      this.authorEditId = author.id
+      this.authorEditInput = author.name
+    },
+
+    async onAuthorEditSubmit() {
+      await axios.put(`/api/writers/${this.authorEditId}`, {
+        author: this.authorEditInput
+      })
+
+      this.getAuthors()
+      this.getBooks()
+
+      this.authorEditId = null
     },
 
     async onAuthorDeleteClick(author) {
