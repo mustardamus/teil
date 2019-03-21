@@ -5,5 +5,6 @@ module.exports = {
   expressSettings: {
     'trust proxy': false
   },
-  controllersGlob: `${__dirname}/controllers/**/!(*test|*spec|*draft).js`
+  controllersGlob: `${__dirname}/controllers/**/!(*test|*spec|*draft).js`,
+  plugins: ['./plugins/generate-id']
 }

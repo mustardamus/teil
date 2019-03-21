@@ -20,11 +20,9 @@ module.exports = {
       }
     },
 
-    ({ sendStatus, body: { book, authorId } }) => {
+    ({ sendStatus, body: { book, authorId }, generateId }) => {
       global.books.push({
-        id: Math.random()
-          .toString(36)
-          .substring(7),
+        id: generateId(),
         name: book,
         authorId
       })

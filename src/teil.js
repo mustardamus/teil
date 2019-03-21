@@ -25,7 +25,7 @@ module.exports = {
 
       const options = buildOptions(configPath)
 
-      plugins()
+      plugins(options)
       watcher = watchControllers(options.controllersGlob)
 
       app = express()

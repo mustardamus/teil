@@ -32,7 +32,9 @@ module.exports = (configPath = cwdConfigPath, customOptions = {}) => {
 
     expressSettings: {},
 
-    controllersGlob: join(srcDir, 'controllers/**/', jsGlob)
+    controllersGlob: join(srcDir, 'controllers/**/', jsGlob),
+
+    plugins: []
   }
 
   return merge({}, defaultOptions, configOptions, customOptions)

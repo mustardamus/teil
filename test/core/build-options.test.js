@@ -17,6 +17,7 @@ describe('Core - Build Options', () => {
     expect(
       opt.controllersGlob.includes('controllers/**/!(*test|*spec|*draft).js')
     ).toBe(true)
+    expect(opt.plugins).toEqual([])
   })
 
   it('should overwrite the default options with a config file', () => {

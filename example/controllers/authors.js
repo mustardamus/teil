@@ -18,15 +18,13 @@ module.exports = {
       }
     },
 
-    ({ sendStatus, body }) => {
+    ({ sendStatus, body, generateId }) => {
       if (body.author.length === 0) {
         return sendStatus(500)
       }
 
       global.authors.push({
-        id: Math.random()
-          .toString(36)
-          .substring(7),
+        id: generateId(),
         name: body.author
       })
 
