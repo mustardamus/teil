@@ -31,7 +31,6 @@ module.exports = (handler, route) => {
 
       return handler
     } catch (err) {
-      console.log('', err)
       next(err) // pass the catched error on to the error handling middleware
     }
   }
