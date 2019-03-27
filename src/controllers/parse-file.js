@@ -23,7 +23,7 @@ Parses a controller .js file.
 
 const { existsSync } = require('fs')
 const importFresh = require('import-fresh')
-const { basename, parse, sep } = require('path')
+const urlFromFilepath = require('./url-from-filepath')
 const parseObject = require('./parse-object')
 
 module.exports = (filePath, options = {}) => {
@@ -31,23 +31,14 @@ module.exports = (filePath, options = {}) => {
     throw new Error(`Does not exist`)
   }
 
-  let url = basename(filePath, '.js')
   const controller = importFresh(filePath)
+  let initialOptions
 
-  if (options.srcDir) {
-    const { dir, name } = parse(filePath)
-    let truncatedPath = dir.replace(options.srcDir, '')
-
-    if (truncatedPath.charAt(0) === '/') {
-      truncatedPath = truncatedPath.substr(1, truncatedPath.length)
+  if (!controller.options || (controller.options && !controller.options.url)) {
+    initialOptions = {
+      url: urlFromFilepath(filePath, options.controllersGlob)
     }
-
-    const truncatedArr = truncatedPath.split(sep)
-
-    truncatedArr.shift() // remove 'controllers' prefix path
-
-    url = `${truncatedArr.join(sep)}/${name}`
   }
 
-  return parseObject(controller, { url })
+  return parseObject(controller, initialOptions)
 }
