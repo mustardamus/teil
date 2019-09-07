@@ -6,7 +6,11 @@ module.exports = controllersGlob => {
   const watcher = chokidar.watch(controllersGlob, opts)
 
   watcher.on('all', (eventName, filePath) => {
-    eventBus.emit('controller:changed', { eventName, filePath })
+    eventBus.emit('controller:changed', {
+      eventName,
+      filePath,
+      controllersGlob
+    })
   })
 
   return watcher

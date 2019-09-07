@@ -17,9 +17,7 @@ module.exports = () => {
     log
       .withScope('Server')
       .success(
-        `Serving statc files from ${options.staticDir} on ${
-          options.staticEndpoint
-        }`
+        `Serving statc files from ${options.staticDir} on ${options.staticEndpoint}`
       )
 
     log
@@ -35,8 +33,8 @@ module.exports = () => {
     log.withScope('Server').success('Restarting server...')
   })
 
-  eventBus.on('controller:changed', ({ filePath }) => {
-    const controller = parseFile(filePath)
+  eventBus.on('controller:changed', ({ filePath, controllersGlob }) => {
+    const controller = parseFile(filePath, { controllersGlob })
     const trimmedPath = filePath.replace(`${process.cwd()}/`, '')
     const routes = controller.map(
       route => `${chalk.green(route.verb)} ${chalk.yellow(route.route)}`
