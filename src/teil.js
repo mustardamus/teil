@@ -13,7 +13,7 @@ const plugins = require('./plugins')
 let app, server, watcher
 
 module.exports = {
-  async start(configPath = '', startServer) {
+  async start(configPath = '', customOptions = {}, startServer) {
     try {
       eventBus._events = {} // TODO event bus reset via function
 
@@ -23,10 +23,10 @@ module.exports = {
         eventBus.emit('error', err)
       })
 
-      const options = buildOptions(configPath)
+      const options = buildOptions(configPath, customOptions)
 
       plugins(options)
-      watcher = watchControllers(options.controllersGlob)
+      watcher = watchControllers(options)
 
       app = express()
       const router = buildRouter(options)

@@ -15,7 +15,7 @@ module.exports = (configPath = cwdConfigPath, customOptions = {}) => {
     configOptions = importFresh(configPath)
   }
 
-  const srcDir = configOptions.srcDir || cwd
+  const srcDir = configOptions.srcDir || customOptions.srcDir || cwd
 
   const defaultOptions = {
     srcDir,
@@ -32,7 +32,7 @@ module.exports = (configPath = cwdConfigPath, customOptions = {}) => {
 
     expressSettings: {},
 
-    controllersGlob: join(srcDir, 'controllers/**/', jsGlob),
+    controllersGlob: join(srcDir, 'controllers/**', jsGlob),
 
     plugins: []
   }

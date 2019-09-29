@@ -1,5 +1,4 @@
 const StackTracey = require('stacktracey')
-const eventBus = require('../core/event-bus')
 
 module.exports = (err, req, res, next) => {
   if (!err) {
@@ -10,9 +9,9 @@ module.exports = (err, req, res, next) => {
 
   if (!res.headersSent) {
     // TODO handle differently in production
-    res.status(500).send(`<pre>${prettyStack}</pre>`) // this goes to the browser
+    res.status(500).send(prettyStack) // this goes to the browser
   }
 
-  eventBus.emit('middleware:error', { req, err, prettyStack })
-  // next(prettyStack) // and this goes to the console
+  // next(prettyStack) // and this would go to the console
+  // but we have async logging in controllers/handler-wrapper.js
 }

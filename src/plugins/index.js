@@ -1,4 +1,5 @@
 const { resolve } = require('path')
+const { existsSync } = require('fs')
 const customContexts = require('../context/custom-contexts')
 const customControllers = require('../controllers/custom-controllers')
 const customMiddlewares = require('../middlewares/custom-middlewares')
@@ -18,10 +19,17 @@ module.exports = options => {
   // adminInterface(tools)
 
   options.plugins.forEach(plugin => {
-    if (plugin.charAt(0) === '.') {
+    if (plugin.charAt(0) !== '/') {
       plugin = resolve(options.srcDir, plugin)
     }
 
-    require(plugin)(tools)
+    if (existsSync(plugin)) {
+      const pluginFn = require(plugin)
+      // TODO check if its a function
+      pluginFn(tools)
+    } else {
+      const err = new Error(`Can not find plugin ${plugin}`)
+      throw err
+    }
   })
 }

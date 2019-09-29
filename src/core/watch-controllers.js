@@ -1,7 +1,7 @@
 const chokidar = require('chokidar')
 const eventBus = require('./event-bus')
 
-module.exports = controllersGlob => {
+module.exports = ({ controllersGlob }) => {
   const opts = { ignoreInitial: true }
   const watcher = chokidar.watch(controllersGlob, opts)
 

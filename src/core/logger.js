@@ -1,6 +1,7 @@
 const log = require('consola')
 const chalk = require('chalk')
 const ttyTable = require('tty-table')
+const StackTracey = require('stacktracey')
 const eventBus = require('./event-bus')
 const parseFile = require('../controllers/parse-file')
 
@@ -45,6 +46,22 @@ module.exports = () => {
 
   eventBus.on('middleware:log', req => {
     log.withScope('Request').info(req.route.path)
+  })
+
+  eventBus.on('middleware:error', ({ req, err }) => {
+    const prettyStack = new StackTracey(err).pretty
+    const stack = prettyStack.split('\n').map((line, index) => {
+      if (index === 0) {
+        line = chalk.white(line)
+      } else {
+        line = chalk.grey(line)
+      }
+
+      return `        ${line}`
+    })
+
+    // TODO have the full stack above the useful message ad location
+    log.withScope(req.path).error(`${err.message}\n${stack.join('\n')}`)
   })
 
   eventBus.on('router:initial-build', routes => {
