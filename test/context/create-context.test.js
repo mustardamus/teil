@@ -30,7 +30,8 @@ describe('Context Builder', () => {
       query: true,
       body: true,
       params: true,
-      cookies: true
+      cookies: true,
+      session: true
     }
 
     const context = createContext({
@@ -46,6 +47,7 @@ describe('Context Builder', () => {
     expect(context.body).toBe(true)
     expect(context.params).toBe(true)
     expect(context.cookies).toBe(true)
+    expect(context.session).toBe(true)
   })
 
   it('should create shortcuts of common used response fields', () => {

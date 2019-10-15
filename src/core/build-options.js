@@ -34,7 +34,26 @@ module.exports = (configPath = cwdConfigPath, customOptions = {}) => {
 
     controllersGlob: join(srcDir, 'controllers/**', jsGlob),
 
-    plugins: []
+    plugins: [],
+
+    middlewares: {
+      helmet: {},
+
+      'body-parser': {
+        init(middleware, options) {
+          return middleware.json(options)
+        }
+      },
+
+      'express-session': {
+        secret: 'keyboard cat',
+        resave: false,
+        saveUninitialized: true,
+        cookie: { secure: false } // TODO only in production true
+      },
+
+      'cookie-parser': {}
+    }
   }
 
   return merge({}, defaultOptions, configOptions, customOptions)

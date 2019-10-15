@@ -18,6 +18,11 @@ describe('Core - Build Options', () => {
       opt.controllersGlob.includes('controllers/**/!(*test|*spec|*draft).js')
     ).toBe(true)
     expect(opt.plugins).toEqual([])
+    expect(opt.middlewares).toBeTruthy()
+    expect(opt.middlewares.helmet).toBeTruthy()
+    expect(opt.middlewares['body-parser']).toBeTruthy()
+    expect(opt.middlewares['express-session']).toBeTruthy()
+    expect(opt.middlewares['cookie-parser']).toBeTruthy()
   })
 
   it('should overwrite the default options with a config file', () => {

@@ -15,26 +15,27 @@ module.exports = ({ route, req, res, next }) => {
       body: req.body,
       cookies: req.cookies,
       params: req.params,
-      query: req.query
+      query: req.query,
+      session: req.session
     })
   }
 
   if (res) {
     extend(context, {
       res,
-      appendHeader: res.append.bind(res),
-      setCookie: res.cookie.bind(res),
-      clearCookie: res.clearCookie.bind(res),
-      download: res.download.bind(res),
-      getHeader: res.get.bind(res),
-      json: res.json.bind(res),
-      jsonp: res.jsonp.bind(res),
-      redirect: res.redirect.bind(res),
-      send: res.send.bind(res),
-      sendFile: res.sendFile.bind(res),
-      sendStatus: res.sendStatus.bind(res),
-      setHeader: res.set.bind(res),
-      status: res.status.bind(res)
+      appendHeader: res.append && res.append.bind(res),
+      setCookie: res.cookie && res.cookie.bind(res),
+      clearCookie: res.clearCookie && res.clearCookie.bind(res),
+      download: res.download && res.download.bind(res),
+      getHeader: res.get && res.get.bind(res),
+      json: res.json && res.json.bind(res),
+      jsonp: res.jsonp && res.jsonp.bind(res),
+      redirect: res.redirect && res.redirect.bind(res),
+      send: res.send && res.send.bind(res),
+      sendFile: res.sendFile && res.sendFile.bind(res),
+      sendStatus: res.sendStatus && res.sendStatus.bind(res),
+      setHeader: res.set && res.set.bind(res),
+      status: res.status && res.status.bind(res)
     })
   }
 

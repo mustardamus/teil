@@ -1,3 +1,4 @@
+const { isFunction } = require('lodash')
 const eventBus = require('../core/event-bus')
 const createContext = require('../context/create-context')
 const customContexts = require('../context/custom-contexts')
@@ -20,7 +21,10 @@ module.exports = (handler, route) => {
       return handler
     } catch (err) {
       eventBus.emit('middleware:error', { req, err })
-      next(err) // pass the first catched error on to the error handling middleware
+
+      if (isFunction(next)) {
+        next(err) // pass the first catched error on to the error handling middleware
+      }
     }
   }
 }

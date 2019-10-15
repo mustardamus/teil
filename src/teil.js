@@ -1,6 +1,4 @@
 const express = require('express')
-const helmet = require('helmet')
-const bodyParser = require('body-parser')
 const logger = require('./core/logger')
 const eventBus = require('./core/event-bus')
 const buildOptions = require('./core/build-options')
@@ -35,8 +33,21 @@ module.exports = {
         options.staticOptions
       )
 
-      app.use(helmet()) // TODO options
-      app.use(bodyParser.json()) // TODO options
+      Object.keys(options.middlewares).forEach(middlewareName => {
+        let middleware = require(middlewareName)
+        const middlewareOptions = options.middlewares[middlewareName] || {}
+        const initFunc = middlewareOptions.init
+
+        if (initFunc) {
+          delete middlewareOptions.init
+          middleware = initFunc(middleware, middlewareOptions)
+
+          app.use(middleware)
+        } else {
+          app.use(middleware(middlewareOptions))
+        }
+      })
+
       app.use(options.staticEndpoint, staticMiddleware)
       app.use(options.apiEndpoint, router)
 

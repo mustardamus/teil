@@ -13,17 +13,27 @@ module.exports = () => {
   eventBus.on('server:started', ({ options }) => {
     log
       .withScope('Server')
-      .success(`Server started on ${options.host}:${options.port}`)
+      .info(
+        `Serving static files from ${options.staticDir} on ${options.staticEndpoint}`
+      )
+
+    log.withScope('Server').info(
+      'Using Middlewares:',
+      Object.keys(options.middlewares)
+        .map(m => chalk.yellow(m))
+        .join(', ')
+    )
 
     log
       .withScope('Server')
-      .success(
-        `Serving statc files from ${options.staticDir} on ${options.staticEndpoint}`
+      .info(
+        'Express Settings:',
+        chalk.yellow(JSON.stringify(options.expressSettings))
       )
 
     log
       .withScope('Server')
-      .info('Express Settings', JSON.stringify(options.expressSettings))
+      .success(`Server started on ${options.host}:${options.port}`)
   })
 
   eventBus.on('server:error', err => {

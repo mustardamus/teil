@@ -6,5 +6,5 @@ module.exports = {
     'trust proxy': false
   },
   controllersGlob: `${__dirname}/controllers/**/!(*test|*spec|*draft).js`,
-  plugins: ['./plugins/generate-id']
+  plugins: ['./plugins/generate-id.js']
 }
