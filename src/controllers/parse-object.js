@@ -46,57 +46,53 @@ const buildFullRoute = (baseUrl, route) => {
 }
 
 module.exports = (controller, initialOptions) => {
-  try {
-    if (!isObject(controller)) {
-      throw new Error(`Should export an object`)
+  if (!isObject(controller)) {
+    throw new Error(`Should export an object`)
+  }
+
+  const parsedRoutes = []
+  const controllerKeys = Object.keys(controller)
+  const fullRoutes = controllerKeys.filter(key => key !== 'options')
+  const controllerOptions = merge(initialOptions, controller.options)
+
+  fullRoutes.forEach(verbWithRoute => {
+    const { verb, route } = extractVerbAndRoute(verbWithRoute)
+
+    if (!validVerbs.includes(verb)) {
+      throw Error(`Unknown HTTP verb '${verb}'`)
     }
 
-    const parsedRoutes = []
-    const controllerKeys = Object.keys(controller)
-    const fullRoutes = controllerKeys.filter(key => key !== 'options')
-    const controllerOptions = merge(initialOptions, controller.options)
+    if (route === false) {
+      throw Error(`Missing route for HTTP verb '${verb}'`)
+    }
 
-    fullRoutes.forEach(verbWithRoute => {
-      const { verb, route } = extractVerbAndRoute(verbWithRoute)
+    const routeObj = controller[verbWithRoute]
+    const fullRoute = buildFullRoute(controllerOptions.url, route)
 
-      if (!validVerbs.includes(verb)) {
-        throw Error(`Unknown HTTP verb '${verb}'`)
+    if (isFunction(routeObj)) {
+      parsedRoutes.push({
+        verb,
+        route: fullRoute,
+        options: {},
+        handlers: [routeObj]
+      })
+    }
+
+    if (isArray(routeObj)) {
+      let options = {}
+
+      if (isObject(routeObj[0]) && !isFunction(routeObj[0])) {
+        options = routeObj[0]
       }
 
-      if (route === false) {
-        throw Error(`Missing route for HTTP verb '${verb}'`)
-      }
+      parsedRoutes.push({
+        verb,
+        route: fullRoute,
+        options,
+        handlers: routeObj.filter(routeFunc => isFunction(routeFunc))
+      })
+    }
+  })
 
-      const routeObj = controller[verbWithRoute]
-      const fullRoute = buildFullRoute(controllerOptions.url, route)
-
-      if (isFunction(routeObj)) {
-        parsedRoutes.push({
-          verb,
-          route: fullRoute,
-          options: {},
-          handlers: [routeObj]
-        })
-      }
-
-      if (isArray(routeObj)) {
-        let options = {}
-
-        if (isObject(routeObj[0]) && !isFunction(routeObj[0])) {
-          options = routeObj[0]
-        }
-
-        parsedRoutes.push({
-          verb,
-          route: fullRoute,
-          options,
-          handlers: routeObj.filter(routeFunc => isFunction(routeFunc))
-        })
-      }
-    })
-
-    return parsedRoutes
-  } catch (err) {
-    throw err
-  }
+  return parsedRoutes
 }

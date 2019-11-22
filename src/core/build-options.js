@@ -52,7 +52,12 @@ module.exports = (configPath = cwdConfigPath, customOptions = {}) => {
         cookie: { secure: false } // TODO only in production true
       },
 
-      'cookie-parser': {}
+      'cookie-parser': {
+        secret: 'some key',
+        init(middleware, options) {
+          return middleware(options.secret, options)
+        }
+      }
     }
   }
 

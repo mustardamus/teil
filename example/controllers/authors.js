@@ -13,7 +13,7 @@ module.exports = {
     {
       schema: {
         body: {
-          author: 'string'
+          author: 'isNotEmpty'
         }
       }
     },

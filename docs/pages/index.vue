@@ -14,7 +14,7 @@ export default {
   
   async asyncData({ $axios }) {
     if (!process.static) {
-      const { data } = await $axios.get('http://localhost:3000/api/simple')
+      const { data } = await $axios.get('/api/simple')
       return data
     }
     

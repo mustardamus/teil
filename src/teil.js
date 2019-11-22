@@ -6,7 +6,7 @@ const watchControllers = require('./core/watch-controllers')
 const buildRouter = require('./core/build-router')
 const replaceRouter = require('./core/replace-router')
 const plugins = require('./plugins')
-// const customControllers = require('./controllers/custom-controllers')
+const customControllers = require('./controllers/custom-controllers')
 
 let app, server, watcher
 
@@ -38,6 +38,8 @@ module.exports = {
         const middlewareOptions = options.middlewares[middlewareName] || {}
         const initFunc = middlewareOptions.init
 
+        console.log('middleware', middlewareName)
+
         if (initFunc) {
           delete middlewareOptions.init
           middleware = initFunc(middleware, middlewareOptions)
@@ -55,8 +57,7 @@ module.exports = {
         app.set(settingName, options.expressSettings[settingName])
       })
 
-      // TODO for all controllers
-      /* customControllers().forEach(({ options }) => {
+      customControllers().forEach(({ options }) => {
         if (options.staticDir) {
           const staticMiddleware = express.static(
             options.staticDir,
@@ -65,7 +66,7 @@ module.exports = {
 
           app.use(`/${options.url}`, staticMiddleware)
         }
-      })*/
+      })
 
       if (startServer) {
         server = app.listen(options.port, options.host, () => {

@@ -5,18 +5,19 @@ const customControllers = require('../controllers/custom-controllers')
 const customMiddlewares = require('../middlewares/custom-middlewares')
 const sendExtend = require('./send-extend')
 const schemaValidation = require('./schema-validation')
-// const adminInterface = require('./admin-interface/admin-interface')
+const adminInterface = require('./admin-interface/admin-interface')
 
 module.exports = options => {
   const tools = {
     extendContext: customContexts,
     addController: customControllers,
-    addMiddleware: customMiddlewares
+    addMiddleware: customMiddlewares,
+    options
   }
 
   sendExtend(tools)
   schemaValidation(tools)
-  // adminInterface(tools)
+  adminInterface(tools)
 
   options.plugins.forEach(plugin => {
     if (plugin.charAt(0) !== '/') {
