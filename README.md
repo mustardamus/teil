@@ -20,14 +20,15 @@ module.exports = {
 }
 ```
 
-And start `teil`, it will automatically create a `/hello/world` route for you:
+And start `teil`, it will automatically create a `/api/hello/world` route for
+you:
 
 ```
 npx teil
 ```
 
-That's it! Now you can visit `http://localhost:3333/hello/world` and you will
-see `Hello, World!`.
+That's it! Now you can visit `http://localhost:3333/api/hello/world` and you
+will see `Hello, World!`.
 
 Check out the `./example` folder for more features, you can start the example
 by running `npm run example`.
