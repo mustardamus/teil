@@ -1,5 +1,5 @@
 module.exports = ({ extendContext, addController }) => {
-  extendContext({
+  /* extendContext({
     whaaat() {
       return 'totally hacked yay'
     }
@@ -17,5 +17,5 @@ module.exports = ({ extendContext, addController }) => {
     'GET /'({ send }) {
       send('owwwww yeahhhhh')
     }
-  })
+  })*/
 }
