@@ -23,6 +23,7 @@ describe('Core - Build Options', () => {
     expect(opt.middlewares['body-parser']).toBeTruthy()
     expect(opt.middlewares['express-session']).toBeTruthy()
     expect(opt.middlewares['cookie-parser']).toBeTruthy()
+    expect(typeof opt.extendRoutes).toBe('function')
   })
 
   it('should overwrite the default options with a config file', () => {

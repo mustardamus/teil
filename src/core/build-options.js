@@ -58,7 +58,9 @@ module.exports = (configPath = cwdConfigPath, customOptions = {}) => {
           return middleware(options.secret, options)
         }
       }
-    }
+    },
+
+    extendRoutes: routes => routes
   }
 
   return merge({}, defaultOptions, configOptions, customOptions)

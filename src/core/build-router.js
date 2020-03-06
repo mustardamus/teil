@@ -26,8 +26,9 @@ module.exports = options => {
     })
 
     const extendedRoutes = extendControllerHandlers(routes)
+    const customRoutes = options.extendRoutes(extendedRoutes)
 
-    extendedRoutes.forEach(route => {
+    customRoutes.forEach(route => {
       const routerFunc = router[route.verb.toLowerCase()]
 
       if (!isFunction(routerFunc)) {
@@ -39,7 +40,7 @@ module.exports = options => {
 
     if (isInitialBuild) {
       isInitialBuild = false
-      eventBus.emit('router:initial-build', extendedRoutes)
+      eventBus.emit('router:initial-build', customRoutes)
     }
 
     return router
