@@ -5,19 +5,19 @@
     <title>Teil Example</title>
     <link rel="stylesheet" href="lib/bulma.min.css">
   </head>
-  
+
   <body>
     <div id="app">
       <div class="columns section">
         <div class="column">
           <h1 class="title is-1">Authors</h1>
-          
+
           <form class="field" @submit.prevent="onAuthorSubmit">
             <div class="control">
               <input class="input" type="input" placeholder="Author Name + Enter" v-model="authorInput" />
             </div>
           </form>
-          
+
           <table class="table is-bordered is-striped is-fullwidth">
             <thead>
               <tr>
@@ -27,7 +27,7 @@
                 <th>Delete</th>
               </tr>
             </thead>
-            
+
             <tbody>
               <tr v-for="author in authors">
                 <td>{{ author.id }}</td>
@@ -37,7 +37,7 @@
                       <input class="input" type="text" v-model="authorEditInput" />
                     </form>
                   </template>
-                  
+
                   <template v-else>
                     {{ author.name }}
                   </template>
@@ -56,15 +56,15 @@
             </tbody>
           </table>
         </div>
-        
+
         <div class="column">
           <h1 class="title is-1">Books</h1>
-          
+
           <form class="field has-addons" @submit.prevent="onBookSubmit">
             <p class="control is-expanded">
               <input class="input" type="text" placeholder="Book Title" v-model="bookInput">
             </p>
-            
+
             <p class="control">
               <span class="select">
                 <select v-model="authorSelect">
@@ -74,14 +74,14 @@
                 </select>
               </span>
             </p>
-            
+
             <p class="control">
               <button type="submit" class="button is-info">
                 Save
               </button>
             </p>
           </form>
-          
+
           <table class="table is-bordered is-striped is-fullwidth">
             <thead>
               <tr>
@@ -91,7 +91,7 @@
                 <th>Delete</th>
               </tr>
             </thead>
-            
+
             <tbody>
               <tr v-for="book in books">
                 <td>{{ book.id }}</td>
@@ -107,8 +107,12 @@
           </table>
         </div>
       </div>
+
+      <footer class="footer has-text-centered">
+        Example application for <code>teil {{ version }}</code>
+      </footer>
     </div>
-    
+
     <script src="lib/vue.min.js"></script>
     <script src="lib/axios.min.js"></script>
     <script src="app.js"></script>

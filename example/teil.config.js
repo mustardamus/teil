@@ -1,3 +1,5 @@
+const { version } = require('../package.json')
+
 module.exports = {
   srcDir: __dirname,
   apiEndpoint: '/api',
@@ -6,5 +8,20 @@ module.exports = {
     'trust proxy': false
   },
   controllersGlob: `${__dirname}/controllers/**/!(*test|*spec|*draft).js`,
-  plugins: ['./plugins/generate-id.js']
+  plugins: ['./plugins/generate-id.js'],
+
+  extendRoutes: routes => {
+    routes.push({
+      verb: 'GET',
+      route: '/version',
+      options: {},
+      handlers: [
+        (req, res) => {
+          res.send(version)
+        }
+      ]
+    })
+
+    return routes
+  }
 }

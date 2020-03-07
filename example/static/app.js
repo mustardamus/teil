@@ -10,13 +10,15 @@ new Vue({
     books: [],
     authorSelect: null,
     authorEditId: null,
-    authorEditInput: ''
+    authorEditInput: '',
+    version: ''
   },
 
   async mounted() {
     this.inputFocus()
     this.getAuthors()
     this.getBooks()
+    this.getVersion()
   },
 
   methods: {
@@ -34,6 +36,11 @@ new Vue({
     async getBooks() {
       const { data } = await axios.get('/api/v1/books')
       this.books = data
+    },
+
+    async getVersion() {
+      const { data } = await axios.get('/api/version')
+      this.version = data
     },
 
     async onAuthorSubmit() {
