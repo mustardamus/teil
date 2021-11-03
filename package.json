@@ -35,7 +35,7 @@
     "stacktracey": "^1.2.123",
     "superstruct": "^0.8.3",
     "tty-table": "^3.2.0",
-    "validator": "^12.2.0"
+    "validator": "^13.7.0"
   },
   "devDependencies": {
     "eslint": "^6.8.0",
